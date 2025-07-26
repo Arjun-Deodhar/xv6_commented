@@ -1,0 +1,979 @@
+($file, @lines	cuth	6
+ALT	kbd.h	11
+ASSERT	lapic.c	25
+Align	umalloc.c	9
+BACK	sh.c	12
+BACKSPACE	console.c	127
+BBLOCK	fs.h	/^#define BBLOCK(b, sb) (b\/BPB + sb.bmapstart)$/
+BCAST	lapic.c	28
+BIG	usertests.c	1452
+BPB	fs.h	45
+BSIZE	fs.h	6
+BUSY	lapic.c	29
+B_DIRTY	buf.h	13
+B_VALID	buf.h	12
+C	console.c	/^#define C(x)  ((x)-'@')  \/\/ Control-x$/
+C	kbd.h	/^#define C(x) (x - '@')$/
+CAPSLOCK	kbd.h	13
+CMOS_PORT	lapic.c	123
+CMOS_RETURN	lapic.c	124
+CMOS_STATA	lapic.c	163
+CMOS_STATB	lapic.c	164
+CMOS_UIP	lapic.c	165
+COM1	uart.c	15
+CONSOLE	file.h	37
+CONV	lapic.c	/^#define    CONV(x)     (t1.x = ((t1.x >> 4) * 10) /
+CONV	lapic.c	224
+CR0_PE	mmu.h	8
+CR0_PG	mmu.h	10
+CR0_WP	mmu.h	9
+CR4_PSE	mmu.h	12
+CRTPORT	console.c	128
+CTL	kbd.h	10
+DAY	lapic.c	170
+DEASSERT	lapic.c	26
+DELIVS	lapic.c	24
+DEVSPACE	memlayout.h	45
+DIRSIZ	fs.h	51
+DPL_USER	mmu.h	127
+E0ESC	kbd.h	17
+ELF_MAGIC	elf.h	13
+ELF_PROG_FLAG_EXEC	elf.h	178
+ELF_PROG_FLAG_READ	elf.h	180
+ELF_PROG_FLAG_WRITE	elf.h	179
+ELF_PROG_LOAD	elf.h	172
+EMBRYO	proc.h	45
+ENABLE	lapic.c	19
+EOI	lapic.c	17
+ERROR	lapic.c	38
+ESR	lapic.c	20
+EXEC	sh.c	8
+EXTMEM	memlayout.h	43
+FD_INODE	file.h	2
+FD_NONE	file.h	2
+FD_PIPE	file.h	2
+FIXED	lapic.c	30
+FL_IF	mmu.h	5
+FSSIZE	param.h	13
+HOURS	lapic.c	169
+Header	umalloc.c	19
+IBLOCK	fs.h	/^#define IBLOCK(i, sb)     ((i) \/ IPB + sb.inodesta/
+ICRHI	lapic.c	31
+ICRLO	lapic.c	21
+ID	lapic.c	14
+IDE_BSY	ide.c	17
+IDE_CMD_RDMUL	ide.c	24
+IDE_CMD_READ	ide.c	22
+IDE_CMD_WRITE	ide.c	23
+IDE_CMD_WRMUL	ide.c	25
+IDE_DF	ide.c	19
+IDE_DRDY	ide.c	18
+IDE_ERR	ide.c	20
+INIT	lapic.c	22
+INPUT_BUF	console.c	181
+INT_ACTIVELOW	ioapic.c	22
+INT_DISABLED	ioapic.c	20
+INT_LEVEL	ioapic.c	21
+INT_LOGICAL	ioapic.c	23
+IOAPIC	ioapic.c	9
+IO_PIC1	picirq.c	6
+IO_PIC2	picirq.c	7
+IPB	fs.h	39
+IRQ_COM1	traps.h	34
+IRQ_ERROR	traps.h	36
+IRQ_IDE	traps.h	35
+IRQ_KBD	traps.h	33
+IRQ_SPURIOUS	traps.h	37
+IRQ_TIMER	traps.h	32
+KBDATAP	kbd.h	5
+KBSTATP	kbd.h	3
+KBS_DIB	kbd.h	4
+KERNBASE	memlayout.h	48
+KERNLINK	memlayout.h	49
+KEY_DEL	kbd.h	29
+KEY_DN	kbd.h	23
+KEY_END	kbd.h	21
+KEY_HOME	kbd.h	20
+KEY_INS	kbd.h	28
+KEY_LF	kbd.h	24
+KEY_PGDN	kbd.h	27
+KEY_PGUP	kbd.h	26
+KEY_RT	kbd.h	25
+KEY_UP	kbd.h	22
+KSTACKSIZE	param.h	2
+LEVEL	lapic.c	27
+LINT0	lapic.c	36
+LINT1	lapic.c	37
+LIST	sh.c	11
+LOGSIZE	param.h	11
+MASKED	lapic.c	39
+MAXARG	param.h	9
+MAXARGS	sh.c	14
+MAXFILE	fs.h	26
+MAXOPBLOCKS	param.h	10
+MINS	lapic.c	168
+MONTH	lapic.c	171
+MPBOOT	mp.h	34
+MPBUS	mp.h	50
+MPIOAPIC	mp.h	51
+MPIOINTR	mp.h	52
+MPLINTR	mp.h	53
+MPPROC	mp.h	49
+Mcat	cat.c	/^main(int argc, char *argv[])$/
+Mecho	echo.c	/^main(int argc, char *argv[])$/
+Mforktest	forktest.c	/^main(void)$/
+Mgrep	grep.c	/^main(int argc, char *argv[])$/
+Minit	init.c	/^main(void)$/
+Mkill	kill.c	/^main(int argc, char **argv)$/
+Mln	ln.c	/^main(int argc, char *argv[])$/
+Mls	ls.c	/^main(int argc, char *argv[])$/
+Mmain	main.c	/^main(void)$/
+Mmkdir	mkdir.c	/^main(int argc, char *argv[])$/
+Mmkfs	mkfs.c	/^main(int argc, char *argv[])$/
+Mrm	rm.c	/^main(int argc, char *argv[])$/
+Msh	sh.c	/^main(void)$/
+Mstressfs	stressfs.c	/^main(int argc, char *argv[])$/
+Musertests	usertests.c	/^main(int argc, char *argv[])$/
+Mwc	wc.c	/^main(int argc, char *argv[])$/
+Mzombie	zombie.c	/^main(void)$/
+N	forktest.c	8
+N	usertests.c	586
+NBUF	param.h	12
+NCPU	param.h	3
+NDEV	param.h	7
+NDIRECT	fs.h	24
+NELEM	defs.h	/^#define NELEM(x) (sizeof(x)\/sizeof((x)[0]))$/
+NFILE	param.h	5
+NINDIRECT	fs.h	25
+NINODE	param.h	6
+NINODES	mkfs.c	18
+NO	kbd.h	7
+NOFILE	param.h	4
+NPDENTRIES	mmu.h	240
+NPROC	param.h	1
+NPTENTRIES	mmu.h	241
+NSEGS	mmu.h	29
+NUMLOCK	kbd.h	14
+O_CREATE	fcntl.h	4
+O_RDONLY	fcntl.h	1
+O_RDWR	fcntl.h	3
+O_WRONLY	fcntl.h	2
+P2V	memlayout.h	/^#define P2V(a) ((void *)(((char *) (a)) + KERNBASE/
+P2V_WO	memlayout.h	/^#define P2V_WO(x) ((x) + KERNBASE)    \/\/ same as P/
+PCINT	lapic.c	35
+PDX	mmu.h	/^#define PDX(va)         (((uint)(va) >> PDXSHIFT) /
+PDXSHIFT	mmu.h	245
+PERIODIC	lapic.c	34
+PGADDR	mmu.h	/^#define PGADDR(d, t, o) ((uint)((d) << PDXSHIFT | /
+PGROUNDDOWN	mmu.h	/^#define PGROUNDDOWN(a) (((a)) & ~(PGSIZE-1))$/
+PGROUNDUP	mmu.h	/^#define PGROUNDUP(sz)  (((sz)+PGSIZE-1) & ~(PGSIZE/
+PGSIZE	mmu.h	242
+PHYSTOP	memlayout.h	44
+PIPE	sh.c	10
+PIPESIZE	pipe.c	11
+PTE_ADDR	mmu.h	/^#define PTE_ADDR(pte)   ((uint)(pte) & ~0xFFF)$/
+PTE_FLAGS	mmu.h	/^#define PTE_FLAGS(pte)  ((uint)(pte) &  0xFFF)$/
+PTE_P	mmu.h	284
+PTE_PS	mmu.h	287
+PTE_U	mmu.h	286
+PTE_W	mmu.h	285
+PTX	mmu.h	/^#define PTX(va)         (((uint)(va) >> PTXSHIFT) /
+PTXSHIFT	mmu.h	244
+REDIR	sh.c	9
+REG_ID	ioapic.c	11
+REG_TABLE	ioapic.c	13
+REG_VER	ioapic.c	12
+ROOTDEV	param.h	8
+ROOTINO	fs.h	5
+RTC_ADDR	usertests.c	1701
+RTC_DATA	usertests.c	1702
+RUNNABLE	proc.h	45
+RUNNING	proc.h	45
+SCROLLLOCK	kbd.h	15
+SECS	lapic.c	167
+SECTOR_SIZE	ide.c	16
+SECTSIZE	bootmain.c	13
+SEG	mmu.h	/^#define SEG(type, base, lim, dpl) (struct segdesc)/
+SEG16	mmu.h	/^#define SEG16(type, base, lim, dpl) (struct segdes/
+SEG_KCODE	mmu.h	22
+SEG_KDATA	mmu.h	23
+SEG_NULLASM	asm.h	10
+SEG_TSS	mmu.h	26
+SEG_UCODE	mmu.h	24
+SEG_UDATA	mmu.h	25
+SETGATE	mmu.h	/^#define SETGATE(gate, istrap, sel, off, d)        /
+SHIFT	kbd.h	9
+SLEEPING	proc.h	45
+STARTUP	lapic.c	23
+STA_R	mmu.h	132
+STA_W	mmu.h	131
+STA_X	mmu.h	130
+STS_IG32	mmu.h	154
+STS_T32A	mmu.h	153
+STS_TG32	mmu.h	155
+SVR	lapic.c	18
+SYS_chdir	syscall.h	19
+SYS_close	syscall.h	31
+SYS_dup	syscall.h	20
+SYS_exec	syscall.h	17
+SYS_exit	syscall.h	12
+SYS_fork	syscall.h	11
+SYS_fstat	syscall.h	18
+SYS_getpid	syscall.h	21
+SYS_kill	syscall.h	16
+SYS_link	syscall.h	29
+SYS_mkdir	syscall.h	30
+SYS_mknod	syscall.h	27
+SYS_open	syscall.h	25
+SYS_pipe	syscall.h	14
+SYS_read	syscall.h	15
+SYS_sbrk	syscall.h	22
+SYS_sleep	syscall.h	23
+SYS_unlink	syscall.h	28
+SYS_uptime	syscall.h	24
+SYS_wait	syscall.h	13
+SYS_write	syscall.h	26
+TCCR	lapic.c	41
+TDCR	lapic.c	42
+TICR	lapic.c	40
+TIMER	lapic.c	32
+TPR	lapic.c	16
+T_ALIGN	traps.h	21
+T_BOUND	traps.h	9
+T_BRKPT	traps.h	7
+T_DBLFLT	traps.h	12
+T_DEBUG	traps.h	5
+T_DEFAULT	traps.h	28
+T_DEV	stat.h	3
+T_DEVICE	traps.h	11
+T_DIR	stat.h	1
+T_DIVIDE	traps.h	4
+T_FILE	stat.h	2
+T_FPERR	traps.h	20
+T_GPFLT	traps.h	17
+T_ILLOP	traps.h	10
+T_IRQ0	traps.h	30
+T_MCHK	traps.h	22
+T_NMI	traps.h	6
+T_OFLOW	traps.h	8
+T_PGFLT	traps.h	18
+T_SEGNP	traps.h	15
+T_SIMDERR	traps.h	23
+T_STACK	traps.h	16
+T_SYSCALL	traps.h	27
+T_TSS	traps.h	14
+UNUSED	proc.h	45
+V2P	memlayout.h	/^#define V2P(a) (((uint) (a)) - KERNBASE)$/
+V2P_WO	memlayout.h	/^#define V2P_WO(x) ((x) - KERNBASE)    \/\/ same as V/
+VER	lapic.c	15
+X1	lapic.c	33
+YEAR	lapic.c	172
+ZOMBIE	proc.h	45
+acquire	spinlock.c	/^acquire(struct spinlock *lk)$/
+acquiresleep	sleeplock.c	/^acquiresleep(struct sleeplock *lk)$/
+addr	mp.h	45
+addrs	file.h	25
+addrs	fs.h	35
+align	elf.h	168
+allocproc	proc.c	/^allocproc(void)$/
+allocuvm	vm.c	/^allocuvm(pde_t *pgdir, uint oldsz, uint newsz)$/
+apicid	mp.h	31
+apicid	proc.h	3
+apicno	mp.h	42
+argfd	sysfile.c	/^argfd(int n, int *pfd, struct file **pf)$/
+argint	syscall.c	/^argint(int n, int *ip)$/
+argptest	usertests.c	/^void argptest()$/
+argptr	syscall.c	/^argptr(int n, char **pp, int size)$/
+args	mmu.h	413
+argstr	syscall.c	/^argstr(int n, char **pp)$/
+argv	init.c	8
+argv	sh.c	22
+atoi	ulib.c	/^atoi(const char *s)$/
+avl	mmu.h	62
+backcmd	sh.c	47
+backcmd	sh.c	/^backcmd(struct cmd *subcmd)$/
+balloc	fs.c	/^balloc(uint dev)$/
+balloc	mkfs.c	/^balloc(int used)$/
+base	umalloc.c	21
+base_15_0	mmu.h	55
+base_23_16	mmu.h	56
+base_31_24	mmu.h	66
+bcache	bio.c	36
+begin_op	log.c	/^begin_op(void)$/
+bfree	fs.c	/^bfree(int dev, uint b)$/
+bget	bio.c	/^bget(uint dev, uint blockno)$/
+bigargtest	usertests.c	/^bigargtest(void)$/
+bigdir	usertests.c	/^bigdir(void)$/
+bigfile	usertests.c	/^bigfile(void)$/
+bigwrite	usertests.c	/^bigwrite(void)$/
+binit	bio.c	/^binit(void)$/
+block	log.c	36
+blockno	buf.h	4
+bmap	fs.c	/^bmap(struct inode *ip, uint bn)$/
+bmapstart	fs.h	21
+bootmain	bootmain.c	/^bootmain(void)$/
+bread	bio.c	/^bread(uint dev, uint blockno)$/
+brelse	bio.c	/^brelse(struct buf *b)$/
+bsstest	usertests.c	/^bsstest(void)$/
+buf	bio.c	31
+buf	buf.h	1
+buf	cat.c	5
+buf	console.c	183
+buf	grep.c	7
+buf	usertests.c	11
+buf	wc.c	5
+bwrite	bio.c	/^bwrite(struct buf *b)$/
+bzero	fs.c	/^bzero(int dev, int bno)$/
+cat	cat.c	/^cat(int fd)$/
+cgaputc	console.c	/^cgaputc(int c)$/
+chan	proc.h	57
+checksum	mp.h	8
+checksum	mp.h	18
+clearpteu	vm.c	/^clearpteu(pde_t *pgdir, char *uva)$/
+cli	x86.h	/^cli(void)$/
+cmd	sh.c	16
+cmd	sh.c	28
+cmd	sh.c	49
+cmos_read	lapic.c	/^cmos_read(uint reg)$/
+cmostime	lapic.c	/^cmostime(struct rtcdate *r)$/
+commit	log.c	/^commit()$/
+committing	log.c	44
+concreate	usertests.c	/^concreate(void)$/
+cons	console.c	25
+consoleinit	console.c	/^consoleinit(void)$/
+consoleintr	console.c	/^consoleintr(int (*getc)(void))$/
+consoleread	console.c	/^consoleread(struct inode *ip, char *dst, int n)$/
+consolewrite	console.c	/^consolewrite(struct inode *ip, char *buf, int n)$/
+consputc	console.c	/^consputc(int c)$/
+context	proc.h	27
+context	proc.h	56
+copyout	vm.c	/^copyout(pde_t *pgdir, uint va, void *p, uint len)$/
+copyuvm	vm.c	/^copyuvm(pde_t *pgdir, uint sz)$/
+cprintf	console.c	/^cprintf(char *fmt, ...)$/
+cpu	proc.h	2
+cpu	spinlock.h	7
+cpuid	proc.c	/^cpuid() {$/
+cpus	mp.c	14
+cr3	mmu.h	352
+create	sysfile.c	/^create(char *path, short type, short major, short /
+createdelete	usertests.c	/^createdelete(void)$/
+createtest	usertests.c	/^createtest(void)$/
+crt	console.c	129
+cs	mmu.h	365
+cs	mmu.h	412
+cs	x86.h	183
+ctlmap	kbd.h	95
+cwd	proc.h	60
+data	buf.h	10
+data	ioapic.c	31
+data	pipe.c	15
+day	date.h	5
+db	mmu.h	64
+deallocuvm	vm.c	/^deallocuvm(pde_t *pgdir, uint oldsz, uint newsz)$/
+dev	buf.h	3
+dev	file.h	14
+dev	log.c	45
+dev	stat.h	7
+devsw	file.c	13
+devsw	file.h	30
+dinode	fs.h	29
+dirent	fs.h	53
+dirfile	usertests.c	/^dirfile(void)$/
+dirlink	fs.c	/^dirlink(struct inode *dp, char *name, uint inum)$/
+dirlookup	fs.c	/^dirlookup(struct inode *dp, char *name, uint *poff/
+dirtest	usertests.c	/^void dirtest(void)$/
+disksize	memide.c	18
+dpl	mmu.h	59
+dpl	mmu.h	417
+ds	mmu.h	369
+ds	x86.h	176
+e	console.c	186
+eargv	sh.c	23
+eax	mmu.h	355
+eax	x86.h	167
+ebp	mmu.h	360
+ebp	proc.h	31
+ebp	x86.h	162
+ebx	mmu.h	358
+ebx	proc.h	30
+ebx	x86.h	164
+echoargv	usertests.c	13
+ecx	mmu.h	356
+ecx	x86.h	166
+edi	mmu.h	362
+edi	proc.h	28
+edi	x86.h	160
+edx	mmu.h	357
+edx	x86.h	165
+efile	sh.c	30
+eflags	mmu.h	354
+eflags	x86.h	185
+ehsize	elf.h	105
+eip	mmu.h	353
+eip	proc.h	32
+eip	x86.h	182
+elf	elf.h	97
+elfhdr	elf.h	95
+end_op	log.c	/^end_op(void)$/
+entry	elf.h	101
+entry	mp.h	22
+entrypgdir	main.c	100
+entrypgdir	main.c	143
+err	x86.h	181
+es	mmu.h	363
+es	x86.h	174
+esi	mmu.h	361
+esi	proc.h	29
+esi	x86.h	161
+esp	mmu.h	359
+esp	x86.h	188
+esp0	mmu.h	343
+esp1	mmu.h	346
+esp2	mmu.h	349
+exec	exec.c	/^exec(char *path, char **argv)$/
+execcmd	sh.c	20
+execcmd	sh.c	/^execcmd(void)$/
+exectest	usertests.c	/^exectest(void)$/
+exit	proc.c	/^exit(void)$/
+exit	user.h	/^int exit(void) __attribute__((noreturn));$/
+exitiputtest	usertests.c	/^exitiputtest(void)$/
+exitwait	usertests.c	/^exitwait(void)$/
+fd	sh.c	32
+fdalloc	sysfile.c	/^fdalloc(struct file *f)$/
+feature	mp.h	36
+fetchint	syscall.c	/^fetchint(uint addr, int *ip)$/
+fetchstr	syscall.c	/^fetchstr(uint addr, char **pp)$/
+file	dot-bochsrc	77
+file	file.c	16
+file	file.h	1
+file	sh.c	29
+filealloc	file.c	/^filealloc(void)$/
+fileclose	file.c	/^fileclose(struct file *f)$/
+filedup	file.c	/^filedup(struct file *f)$/
+fileinit	file.c	/^fileinit(void)$/
+fileread	file.c	/^fileread(struct file *f, char *addr, int n)$/
+filestat	file.c	/^filestat(struct file *f, struct stat *st)$/
+filesz	elf.h	165
+filewrite	file.c	/^filewrite(struct file *f, char *addr, int n)$/
+fill_rtcdate	lapic.c	/^fill_rtcdate(struct rtcdate *r)$/
+flags	buf.h	2
+flags	elf.h	104
+flags	elf.h	167
+flags	mp.h	33
+flags	mp.h	44
+fmtname	ls.c	/^fmtname(char *path)$/
+fork	proc.c	/^fork(void)$/
+fork1	sh.c	/^fork1(void)$/
+forkret	proc.c	/^forkret(void)$/
+forktest	forktest.c	/^forktest(void)$/
+forktest	usertests.c	/^forktest(void)$/
+fourfiles	usertests.c	/^fourfiles(void)$/
+fourteen	usertests.c	/^fourteen(void)$/
+free	umalloc.c	/^free(void *ap)$/
+freeblock	mkfs.c	33
+freeinode	mkfs.c	32
+freelist	kalloc.c	41
+freep	umalloc.c	22
+freerange	kalloc.c	/^freerange(void *vstart, void *vend)$/
+freevm	vm.c	/^freevm(pde_t *pgdir)$/
+fs	mmu.h	371
+fs	x86.h	172
+fsfd	mkfs.c	29
+fsfull	usertests.c	/^fsfull()$/
+ftable	file.c	17
+g	mmu.h	65
+gatedesc	mmu.h	410
+gdt	proc.h	6
+getcallerpcs	spinlock.c	/^getcallerpcs(void *v, uint pcs[])$/
+getcmd	sh.c	/^getcmd(char *buf, int nbuf)$/
+gets	ulib.c	/^gets(char *buf, int max)$/
+gettoken	sh.c	/^gettoken(char **ps, char *es, char **q, char **eq)/
+grep	grep.c	/^grep(char *pattern, int fd)$/
+growproc	proc.c	/^growproc(int n)$/
+gs	mmu.h	373
+gs	x86.h	170
+havedisk1	ide.c	34
+head	bio.c	35
+header	umalloc.c	11
+holding	spinlock.c	/^holding(struct spinlock *lock)$/
+holdingsleep	sleeplock.c	/^holdingsleep(struct sleeplock *lk)$/
+hour	date.h	4
+ialloc	fs.c	/^ialloc(uint dev, short type)$/
+ialloc	mkfs.c	/^ialloc(ushort type)$/
+iappend	mkfs.c	/^iappend(uint inum, void *xp, int n)$/
+icache	fs.c	169
+ideinit	ide.c	/^ideinit(void)$/
+ideinit	memide.c	/^ideinit(void)$/
+ideintr	ide.c	/^ideintr(void)$/
+ideintr	memide.c	/^ideintr(void)$/
+idelock	ide.c	31
+idequeue	ide.c	32
+iderw	ide.c	/^iderw(struct buf *b)$/
+iderw	memide.c	/^iderw(struct buf *b)$/
+idestart	ide.c	/^idestart(struct buf *b)$/
+idewait	ide.c	/^idewait(int checkerr)$/
+idt	trap.c	12
+idtinit	trap.c	/^idtinit(void)$/
+idup	fs.c	/^idup(struct inode *ip)$/
+iget	fs.c	/^iget(uint dev, uint inum)$/
+iinit	fs.c	/^iinit(int dev)$/
+ilock	fs.c	/^ilock(struct inode *ip)$/
+imcrp	mp.h	10
+inb	x86.h	/^inb(ushort port)$/
+initlock	spinlock.c	/^initlock(struct spinlock *lk, char *name)$/
+initlog	log.c	/^initlog(int dev)$/
+initproc	proc.c	15
+initsleeplock	sleeplock.c	/^initsleeplock(struct sleeplock *lk, char *name)$/
+inituvm	vm.c	/^inituvm(pde_t *pgdir, char *init, uint sz)$/
+ino	stat.h	8
+inode	file.h	13
+inode	fs.c	168
+inodestart	fs.h	20
+input	console.c	187
+insl	x86.h	/^insl(int port, void *addr, int cnt)$/
+install_trans	log.c	/^install_trans(void)$/
+intena	proc.h	9
+inum	file.h	15
+inum	fs.h	54
+inum	usertests.c	771
+ioapic	ioapic.c	25
+ioapic	ioapic.c	28
+ioapicenable	ioapic.c	/^ioapicenable(int irq, int cpunum)$/
+ioapicid	mp.c	16
+ioapicinit	ioapic.c	/^ioapicinit(void)$/
+ioapicread	ioapic.c	/^ioapicread(int reg)$/
+ioapicwrite	ioapic.c	/^ioapicwrite(int reg, uint data)$/
+iomb	mmu.h	378
+ip	file.h	7
+iput	fs.c	/^iput(struct inode *ip)$/
+iputtest	usertests.c	/^iputtest(void)$/
+iref	usertests.c	/^iref(void)$/
+isdirempty	sysfile.c	/^isdirempty(struct inode *dp)$/
+itrunc	fs.c	/^itrunc(struct inode *ip)$/
+iunlock	fs.c	/^iunlock(struct inode *ip)$/
+iunlockput	fs.c	/^iunlockput(struct inode *ip)$/
+iupdate	fs.c	/^iupdate(struct inode *ip)$/
+kalloc	kalloc.c	/^kalloc(void)$/
+kbdgetc	kbd.c	/^kbdgetc(void)$/
+kbdintr	kbd.c	/^kbdintr(void)$/
+kfree	kalloc.c	/^kfree(char *v)$/
+kill	proc.c	/^kill(int pid)$/
+killed	proc.h	58
+kinit1	kalloc.c	/^kinit1(void *vstart, void *vend)$/
+kinit2	kalloc.c	/^kinit2(void *vstart, void *vend)$/
+kmap	vm.c	269
+kmap	vm.c	274
+kmem	kalloc.c	42
+kpgdir	vm.c	16
+kstack	proc.h	51
+kvmalloc	vm.c	/^kvmalloc(void)$/
+lapic	lapic.c	44
+lapicaddr	mp.h	23
+lapiceoi	lapic.c	/^lapiceoi(void)$/
+lapicid	lapic.c	/^lapicid(void)$/
+lapicinit	lapic.c	/^lapicinit(void)$/
+lapicstartap	lapic.c	/^lapicstartap(uchar apicid, uint addr)$/
+lapicw	lapic.c	/^lapicw(int index, int value)$/
+lcr3	x86.h	/^lcr3(uint val)$/
+ldt	mmu.h	375
+left	sh.c	37
+left	sh.c	43
+length	mp.h	6
+length	mp.h	16
+lgdt	x86.h	/^lgdt(struct segdesc *p, int size)$/
+lh	log.c	46
+lidt	x86.h	/^lidt(struct gatedesc *p, int size)$/
+lim_15_0	mmu.h	54
+lim_19_16	mmu.h	61
+link	mmu.h	342
+linktest	usertests.c	/^linktest(void)$/
+linkunlink	usertests.c	/^linkunlink()$/
+listcmd	sh.c	41
+listcmd	sh.c	/^listcmd(struct cmd *left, struct cmd *right)$/
+lk	sleeplock.h	4
+loadgs	x86.h	/^loadgs(ushort v)$/
+loaduvm	vm.c	/^loaduvm(pde_t *pgdir, char *addr, struct inode *ip/
+lock	bio.c	30
+lock	buf.h	5
+lock	console.c	23
+lock	file.c	15
+lock	file.h	17
+lock	fs.c	167
+lock	kalloc.c	39
+lock	log.c	40
+lock	pipe.c	14
+lock	proc.c	11
+locked	sleeplock.h	3
+locked	spinlock.h	3
+locking	console.c	24
+log	log.c	39
+log	log.c	48
+log_write	log.c	/^log_write(struct buf *b)$/
+logheader	log.c	34
+logstart	fs.h	19
+ls	ls.c	/^ls(char *path)$/
+ltr	x86.h	/^ltr(ushort sel)$/
+machine	elf.h	99
+magic	elf.h	96
+major	file.h	21
+major	fs.h	31
+malloc	umalloc.c	/^malloc(uint nbytes)$/
+mappages	vm.c	/^mappages(pde_t *pgdir, void *va, uint size, uint p/
+match	grep.c	/^match(char *re, char *text)$/
+matchhere	grep.c	/^int matchhere(char *re, char *text)$/
+matchstar	grep.c	/^int matchstar(int c, char *re, char *text)$/
+mem	usertests.c	/^mem(void)$/
+memcmp	string.c	/^memcmp(const void *v1, const void *v2, uint n)$/
+memcpy	string.c	/^memcpy(void *dst, const void *src, uint n)$/
+memdisk	memide.c	19
+memmove	string.c	/^memmove(void *dst, const void *src, uint n)$/
+memmove	ulib.c	/^memmove(void *vdst, const void *vsrc, int n)$/
+memset	string.c	/^memset(void *dst, int c, uint n)$/
+memset	ulib.c	/^memset(void *dst, int c, uint n)$/
+memsz	elf.h	166
+microdelay	lapic.c	/^microdelay(int us)$/
+min	fs.c	/^#define min(a, b) ((a) < (b) ? (a) : (b))$/
+min	mkfs.c	/^#define min(a, b) ((a) < (b) ? (a) : (b))$/
+minor	file.h	22
+minor	fs.h	32
+minute	date.h	3
+mode	sh.c	31
+month	date.h	6
+morecore	umalloc.c	/^morecore(uint nu)$/
+mp	mp.h	3
+mpconf	mp.h	14
+mpconfig	mp.c	/^mpconfig(struct mp **pmp)$/
+mpenter	main.c	/^mpenter(void)$/
+mpinit	mp.c	/^mpinit(void)$/
+mpioapic	mp.h	40
+mpmain	main.c	/^static void mpmain(void)  __attribute__((noreturn)/
+mpmain	main.c	/^mpmain(void)$/
+mpproc	mp.h	29
+mpsearch	mp.c	/^mpsearch(void)$/
+mpsearch1	mp.c	/^mpsearch1(uint a, int len)$/
+mycpu	proc.c	/^mycpu(void)$/
+myproc	proc.c	/^myproc(void) {$/
+n	log.c	35
+name	fs.h	55
+name	proc.h	61
+name	sleeplock.h	7
+name	spinlock.h	6
+name	usertests.c	12
+name	usertests.c	772
+namecmp	fs.c	/^namecmp(const char *s, const char *t)$/
+namei	fs.c	/^namei(char *path)$/
+nameiparent	fs.c	/^nameiparent(char *path, char *name)$/
+namex	fs.c	/^namex(char *path, int nameiparent, char *name)$/
+nbitmap	mkfs.c	23
+nblocks	fs.h	16
+nblocks	mkfs.c	27
+ncli	proc.h	8
+ncpu	mp.c	15
+next	buf.h	8
+next	kalloc.c	25
+nextpid	proc.c	17
+ninodeblocks	mkfs.c	24
+ninodes	fs.h	17
+nlink	file.h	23
+nlink	fs.h	33
+nlink	stat.h	9
+nlog	fs.h	18
+nlog	mkfs.c	25
+nmeta	mkfs.c	26
+normalmap	kbd.h	51
+nread	pipe.c	16
+nulterminate	sh.c	/^nulterminate(struct cmd *cmd)$/
+nwrite	pipe.c	17
+oemlength	mp.h	21
+oemtable	mp.h	20
+oesp	x86.h	163
+off	elf.h	162
+off	file.h	8
+off_15_0	mmu.h	411
+off_31_16	mmu.h	419
+ofile	proc.h	59
+openiputtest	usertests.c	/^openiputtest(void)$/
+opentest	usertests.c	/^opentest(void)$/
+outb	x86.h	/^outb(ushort port, uchar data)$/
+outsl	x86.h	/^outsl(int port, const void *addr, int cnt)$/
+outstanding	log.c	43
+outw	x86.h	/^outw(ushort port, ushort data)$/
+p	mmu.h	60
+p	mmu.h	418
+pad	ioapic.c	30
+padding1	mmu.h	345
+padding1	x86.h	171
+padding10	mmu.h	376
+padding2	mmu.h	348
+padding2	x86.h	173
+padding3	mmu.h	351
+padding3	x86.h	175
+padding4	mmu.h	364
+padding4	x86.h	177
+padding5	mmu.h	366
+padding5	x86.h	184
+padding6	mmu.h	368
+padding6	x86.h	190
+padding7	mmu.h	370
+padding8	mmu.h	372
+padding9	mmu.h	374
+paddr	elf.h	164
+panic	console.c	/^panic(char *s)$/
+panic	defs.h	/^void            panic(char*) __attribute__((noretu/
+panic	sh.c	/^panic(char *s)$/
+panicked	console.c	20
+parent	proc.h	54
+parseblock	sh.c	/^parseblock(char **ps, char *es)$/
+parsecmd	sh.c	/^parsecmd(char *s)$/
+parseexec	sh.c	/^parseexec(char **ps, char *es)$/
+parseline	sh.c	/^parseline(char **ps, char *es)$/
+parsepipe	sh.c	/^parsepipe(char **ps, char *es)$/
+parseredirs	sh.c	/^parseredirs(struct cmd *cmd, char **ps, char *es)$/
+pcs	spinlock.h	8
+pde_t	types.h	14
+peek	sh.c	/^peek(char **ps, char *es, char *toks)$/
+perm	vm.c	273
+pgdir	proc.h	50
+phentsize	elf.h	106
+phnum	elf.h	107
+phoff	elf.h	102
+phys_end	vm.c	272
+phys_start	vm.c	271
+physaddr	mp.h	5
+picinit	picirq.c	/^picinit(void)$/
+pid	proc.h	53
+pid	sleeplock.h	8
+pinit	proc.c	/^pinit(void)$/
+pipe	file.h	6
+pipe	pipe.c	13
+pipe1	usertests.c	/^pipe1(void)$/
+pipealloc	pipe.c	/^pipealloc(struct file **f0, struct file **f1)$/
+pipeclose	pipe.c	/^pipeclose(struct pipe *p, int writable)$/
+pipecmd	sh.c	35
+pipecmd	sh.c	/^pipecmd(struct cmd *left, struct cmd *right)$/
+piperead	pipe.c	/^piperead(struct pipe *p, char *addr, int n)$/
+pipewrite	pipe.c	/^pipewrite(struct pipe *p, char *addr, int n)$/
+popcli	spinlock.c	/^popcli(void)$/
+preempt	usertests.c	/^preempt(void)$/
+prev	buf.h	7
+printf	forktest.c	/^printf(int fd, const char *s, ...)$/
+printf	printf.c	/^printf(int fd, const char *fmt, ...)$/
+printint	console.c	/^printint(int xx, int base, int sign)$/
+printint	printf.c	/^printint(int fd, int xx, int base, int sgn)$/
+proc	proc.c	12
+proc	proc.h	10
+proc	proc.h	48
+procdump	proc.c	/^procdump(void)$/
+procstate	proc.h	45
+product	mp.h	19
+proghdr	elf.h	160
+ptable	proc.c	13
+pte_t	mmu.h	312
+ptr	umalloc.c	13
+pushcli	spinlock.c	/^pushcli(void)$/
+putc	printf.c	/^putc(int fd, char c)$/
+qnext	buf.h	9
+r	console.c	184
+rand	usertests.c	/^rand()$/
+randstate	usertests.c	1740
+rcr2	x86.h	/^rcr2(void)$/
+read	file.h	/^  int (*read)(struct inode*, char*, int);$/
+read_head	log.c	/^read_head(void)$/
+readable	file.h	4
+readeflags	x86.h	/^readeflags(void)$/
+readi	fs.c	/^readi(struct inode *ip, char *dst, uint off, uint /
+readopen	pipe.c	18
+readsb	fs.c	/^readsb(int dev, struct superblock *sb)$/
+readsect	bootmain.c	/^readsect(void *dst, uint offset)$/
+readseg	bootmain.c	/^readseg(uchar* pa, uint count, uint offset)$/
+recover_from_log	log.c	/^recover_from_log(void)$/
+redircmd	sh.c	26
+redircmd	sh.c	/^redircmd(struct cmd *subcmd, char *file, char *efi/
+ref	file.h	3
+ref	file.h	16
+refcnt	buf.h	6
+reg	ioapic.c	29
+release	spinlock.c	/^release(struct spinlock *lk)$/
+releasesleep	sleeplock.c	/^releasesleep(struct sleeplock *lk)$/
+reserved	mp.h	11
+reserved	mp.h	26
+reserved	mp.h	37
+right	sh.c	38
+right	sh.c	44
+rinode	mkfs.c	/^rinode(uint inum, struct dinode *ip)$/
+rmdot	usertests.c	/^rmdot(void)$/
+rsect	mkfs.c	/^rsect(uint sec, void *buf)$/
+rsv1	mmu.h	63
+rsv1	mmu.h	414
+rtcdate	date.h	1
+run	kalloc.c	24
+runcmd	sh.c	/^runcmd(struct cmd *cmd)$/
+s	mmu.h	58
+s	mmu.h	416
+s	umalloc.c	15
+safestrcpy	string.c	/^safestrcpy(char *s, const char *t, int n)$/
+sb	fs.c	28
+sb	mkfs.c	30
+sbrktest	usertests.c	/^sbrktest(void)$/
+sched	proc.c	/^sched(void)$/
+scheduler	defs.h	/^void            scheduler(void) __attribute__((nor/
+scheduler	proc.c	/^scheduler(void)$/
+scheduler	proc.h	4
+second	date.h	2
+segdesc	mmu.h	53
+seginit	vm.c	/^seginit(void)$/
+setupkvm	vm.c	/^setupkvm(void)$/
+sharedfd	usertests.c	/^sharedfd(void)$/
+shentsize	elf.h	108
+shiftcode	kbd.h	34
+shiftmap	kbd.h	73
+shnum	elf.h	109
+shoff	elf.h	103
+shstrndx	elf.h	110
+signature	mp.h	4
+signature	mp.h	15
+signature	mp.h	35
+size	file.h	24
+size	fs.h	15
+size	fs.h	34
+size	log.c	42
+size	stat.h	10
+size	umalloc.c	14
+skipelem	fs.c	/^skipelem(char *path, char *name)$/
+sleep	proc.c	/^sleep(void *chan, struct spinlock *lk)$/
+sleeplock	sleeplock.h	2
+specrev	mp.h	7
+spinlock	spinlock.h	2
+ss	mmu.h	367
+ss	x86.h	189
+ss0	mmu.h	344
+ss1	mmu.h	347
+ss2	mmu.h	350
+start	log.c	41
+started	proc.h	7
+startothers	main.c	/^startothers(void)$/
+stat	mkfs.c	8
+stat	stat.h	5
+stat	ulib.c	/^stat(const char *n, struct stat *st)$/
+state	proc.h	52
+stati	fs.c	/^stati(struct inode *ip, struct stat *st)$/
+static_assert	mkfs.c	/^#define static_assert(a, b) do { switch (0) case 0/
+stdout	usertests.c	14
+sti	x86.h	/^sti(void)$/
+stosb	x86.h	/^stosb(void *addr, int data, int cnt)$/
+stosl	x86.h	/^stosl(void *addr, int data, int cnt)$/
+strchr	ulib.c	/^strchr(const char *s, char c)$/
+strcmp	ulib.c	/^strcmp(const char *p, const char *q)$/
+strcpy	ulib.c	/^strcpy(char *s, const char *t)$/
+strlen	string.c	/^strlen(const char *s)$/
+strlen	ulib.c	/^strlen(const char *s)$/
+strncmp	string.c	/^strncmp(const char *p, const char *q, uint n)$/
+strncpy	string.c	/^strncpy(char *s, const char *t, int n)$/
+subdir	usertests.c	/^subdir(void)$/
+sum	mp.c	/^sum(uchar *addr, int len)$/
+superblock	fs.h	14
+switchkvm	vm.c	/^switchkvm(void)$/
+switchuvm	vm.c	/^switchuvm(struct proc *p)$/
+symbols	sh.c	267
+sys_chdir	sysfile.c	/^sys_chdir(void)$/
+sys_close	sysfile.c	/^sys_close(void)$/
+sys_dup	sysfile.c	/^sys_dup(void)$/
+sys_exec	sysfile.c	/^sys_exec(void)$/
+sys_exit	sysproc.c	/^sys_exit(void)$/
+sys_fork	sysproc.c	/^sys_fork(void)$/
+sys_fstat	sysfile.c	/^sys_fstat(void)$/
+sys_getpid	sysproc.c	/^sys_getpid(void)$/
+sys_kill	sysproc.c	/^sys_kill(void)$/
+sys_link	sysfile.c	/^sys_link(void)$/
+sys_mkdir	sysfile.c	/^sys_mkdir(void)$/
+sys_mknod	sysfile.c	/^sys_mknod(void)$/
+sys_open	sysfile.c	/^sys_open(void)$/
+sys_pipe	sysfile.c	/^sys_pipe(void)$/
+sys_read	sysfile.c	/^sys_read(void)$/
+sys_sbrk	sysproc.c	/^sys_sbrk(void)$/
+sys_sleep	sysproc.c	/^sys_sleep(void)$/
+sys_unlink	sysfile.c	/^sys_unlink(void)$/
+sys_uptime	sysproc.c	/^sys_uptime(void)$/
+sys_wait	sysproc.c	/^sys_wait(void)$/
+sys_write	sysfile.c	/^sys_write(void)$/
+syscall	syscall.c	/^syscall(void)$/
+sz	proc.h	49
+t	mmu.h	377
+taskstate	mmu.h	341
+tf	proc.h	55
+ticks	trap.c	15
+tickslock	trap.c	14
+togglecode	kbd.h	44
+trap	trap.c	/^trap(struct trapframe *tf)$/
+trapframe	x86.h	158
+trapno	x86.h	178
+ts	proc.h	5
+tvinit	trap.c	/^tvinit(void)$/
+type	elf.h	98
+type	elf.h	161
+type	file.h	2
+type	file.h	20
+type	fs.h	30
+type	mmu.h	57
+type	mmu.h	415
+type	mp.h	9
+type	mp.h	30
+type	mp.h	41
+type	sh.c	17
+type	sh.c	21
+type	sh.c	27
+type	sh.c	36
+type	sh.c	42
+type	sh.c	48
+type	stat.h	6
+uart	uart.c	17
+uartgetc	uart.c	/^uartgetc(void)$/
+uartinit	uart.c	/^uartinit(void)$/
+uartintr	uart.c	/^uartintr(void)$/
+uartputc	uart.c	/^uartputc(int c)$/
+uchar	types.h	9
+uint	types.h	7
+uio	usertests.c	/^uio()$/
+uninit	usertests.c	1593
+unlinkread	usertests.c	/^unlinkread(void)$/
+use_lock	kalloc.c	40
+userinit	proc.c	/^userinit(void)$/
+ushort	types.h	8
+uva2ka	vm.c	/^uva2ka(pde_t *pgdir, char *uva)$/
+vaddr	elf.h	163
+valid	file.h	18
+validateint	usertests.c	/^validateint(int *p)$/
+validatetest	usertests.c	/^validatetest(void)$/
+version	elf.h	100
+version	mp.h	17
+version	mp.h	32
+version	mp.h	43
+virt	vm.c	270
+w	console.c	185
+wait	proc.c	/^wait(void)$/
+waitdisk	bootmain.c	/^waitdisk(void)$/
+wakeup	proc.c	/^wakeup(void *chan)$/
+wakeup1	proc.c	/^wakeup1(void *chan)$/
+walkpgdir	vm.c	/^walkpgdir(pde_t *pgdir, const void *va, int alloc)/
+wc	wc.c	/^wc(int fd, char *name)$/
+whitespace	sh.c	266
+winode	mkfs.c	/^winode(uint inum, struct dinode *ip)$/
+writable	file.h	5
+write	file.h	/^  int (*write)(struct inode*, char*, int);$/
+write_head	log.c	/^write_head(void)$/
+write_log	log.c	/^write_log(void)$/
+writefile	cuth	/^sub writefile($@){$/
+writei	fs.c	/^writei(struct inode *ip, char *src, uint off, uint/
+writeopen	pipe.c	19
+writetest	usertests.c	/^writetest(void)$/
+writetest1	usertests.c	/^writetest1(void)$/
+wsect	mkfs.c	/^wsect(uint sec, void *buf)$/
+x	umalloc.c	16
+xchecksum	mp.h	25
+xchg	x86.h	/^xchg(volatile uint *addr, uint newval)$/
+xint	mkfs.c	/^xint(uint x)$/
+xlength	mp.h	24
+xshort	mkfs.c	/^xshort(ushort x)$/
+year	date.h	7
+yield	proc.c	/^yield(void)$/
+zeroes	mkfs.c	31
