@@ -1,7 +1,7 @@
 /* sleeplocks are used for tasks that require a lock to be held for 
  * a long time
  *
- * this improves performance, since sloe tasks like disk access would
+ * this improves performance, since slow tasks like disk access would
  * make the process hold the spinlock for a very long time, causing others
  * to spin
  *
