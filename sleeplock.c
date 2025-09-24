@@ -27,7 +27,6 @@ acquiresleep(struct sleeplock *lk)
     sleep(lk, &lk->lk);
   }
   /* you obtained the lock, now set locked to 1
-   * and release the sleeplock
    */
   lk->locked = 1;
   lk->pid = myproc()->pid;

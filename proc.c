@@ -545,7 +545,85 @@ wait(void)
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-/* Arjun */
+/* Arjun 
+ * the ptable.lock is a interesting one, since a kernel thread on one
+ * processor might acquire() it, but some kernel thread on another
+ * processor might release() it
+ * (by kernel thread, we mean the scheduler code running on some processor)
+ *
+ * forkret() exists for the purpose of releasing the ptable.lock when a 
+ * process is scheduled for the very first time only
+ *
+ * userinit() calls allocproc() which sets the tf->eip to forkret()
+ *
+ * for example, the first time init is to be scheduled, scheduler will have
+ * ptable.lock and it will do swtch() for switching to the context of init
+ * after that, init's context has tf->eip set to forkret() and hence the
+ * ptable.lock is released in forkret() and then the trapframe winds up,
+ * thus starting init
+ *
+ * now, after some time say a timer interrupt occurs
+ * in trap.c, yield() gets called which acquires the ptable.lock again for
+ * changing the state of the process from RUNNING to RUNNABLE
+ *
+ * yield() now wants to switch back to the scheduler, but there is a subtle issue!
+ * how will the scheduler have the ptable.lock?
+ *
+ * since the scheduler will start running on the line where swtch() was called
+ * in the scheduler, it is supposed to have the ptable.lock, but the scheduler
+ * cannot acquire() this lock since the acquire is outisde the
+ * round-robin for loop of the scheduler
+ *
+ * hence, yield() does not release the lock!! Instead, it just calls sched() after 
+ * changing the process state
+ *
+ * thus, when the scheduler code starts running inside the inner for loop, it has
+ * the ptable.lock :)
+ *
+ * Now, scheduler will release that lock after the round-robin "round" ends
+ * ad re-acquire it in the next iteration of the infinite for loop on the outside
+ * 
+ * Now after some time, its init's turn to get scheduled
+ *
+ * It MUST be ensured that a process does not hold the lock on ptable before
+ * entering user mode
+ *
+ * forkret() took care of this for the very first time the process was scheduled
+ * however, when the process regains control, while going back to user mode, the
+ * ptable.lock must be released
+ *
+ * this is why yield() has a release() after sched()
+ * init will get scheduled by the scheduler and the swtch() inside scheduler 
+ * will lead to the tf->eip of init being restored, thus restarting from 
+ * release(&ptable.lock) inside yield() :)
+ *
+ * there is another way in which the process might regain control 
+ * (basically anywhere sched() is called, and we want to go back to that
+ * process)
+ *
+ * this scenario is when sleep() is called by a process on some channel 
+ * void *chan while holding a spinlock lk
+ * sleep(void *chan, struct spinlock *lk)
+ *
+ * AGAIN, since sched() is going to be called here, we must acquire() ptable.lock
+ * since the scheduler will be "invoked" from here and the scheduler must
+ * have that lock 
+ *
+ * on returing, ptable.lock must be released, just like we did in yield()
+ *
+ * NOTE: sched() is also called in exit(), but we do not want to go back there
+ * since the process is exiting, and thus the ptable.lock is not acquired in 
+ * exit()
+ *
+ * A generic rule for a process calling sched(), and wants control back:
+ * That process must acquire() ptable.lock before calling sched() and release()
+ * ptable.lock after calling sched()
+ * 
+ * xv6 also lists this rule that "no lock other tha ptable.lock" must be held when
+ * a process is giving up the CPU
+ * this is why it is checked in sched() that the particular process holds ONLY the
+ * ptable.lock when sched() is called by it
+ */
 void
 scheduler(void)
 {
@@ -693,6 +771,9 @@ yield(void)
 
 // A fork child's very first scheduling by scheduler()
 // will swtch here.  "Return" to user space.
+/* forkret() exists so that the ptable.lock can be released for
+ * the first time a process is scheduled
+ */
 void
 forkret(void)
 {
@@ -714,6 +795,23 @@ forkret(void)
 
 // Atomically release lock and sleep on chan.
 // Reacquires lock when awakened.
+/* Arjun
+ * sleep() is a kernel internal function, atomically releases
+ * spinlock lk, which is the lock passed to sleep()
+ *
+ * this lock needs to be re-acquired when this process is woken up
+ * the wakeup() works becuase struct proc's chan is set by chan
+ * given to sleep()
+ *
+ * this is basically the address of some data structure on which 
+ * the process wants to sleep
+ *
+ * a special thing that happens here is that ptable.lock is held
+ * while sleeping, which is the only lock that can be held even when the
+ * process sleeps
+ * (read the comment aobve definition of scheduler())
+ * 
+ */
 void
 sleep(void *chan, struct spinlock *lk)
 {
@@ -722,7 +820,8 @@ sleep(void *chan, struct spinlock *lk)
   /* error checks
    *
    * ensure that there is some process running on mycpu()
-   * ensure that the pointer lk is not null
+   * ensure that the pointer lk is not null, i.e. you are
+   * sleeping without any lock
    */
   if(p == 0)
     panic("sleep");
