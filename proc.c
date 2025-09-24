@@ -612,8 +612,8 @@ wait(void)
  * on returing, ptable.lock must be released, just like we did in yield()
  *
  * NOTE: sched() is also called in exit(), but we do not want to go back there
- * since the process is exiting, and thus the ptable.lock is not acquired in 
- * exit()
+ * since the process is exiting, and thus the ptable.lock is not released after
+ * sched() in exit() (however, the lock is acquired before exit)
  *
  * A generic rule for a process calling sched(), and wants control back:
  * That process must acquire() ptable.lock before calling sched() and release()

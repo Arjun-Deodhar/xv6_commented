@@ -1,4 +1,4 @@
-cscope 15 $HOME/projects/commented_xv6               0000239787
+cscope 15 $HOME/projects/xv6_commented               0000239790
 	@asm.h
 
 10 
@@ -7842,21 +7842,21 @@ IDE_ERR
 	}
 }
 
-51 
+53 
 	$ideš™
 ()
 
-53 
+55 
 i
 ;
 
-55 
+57 
 	`š™lock
 (&
 id–ock
 , "ide");
 
-56 
+58 
 	`ißpiûÇbË
 (
 IRQ_IDE
@@ -7864,35 +7864,35 @@ IRQ_IDE
 nýu
  - 1);
 
-57 
+59 
 	`idewa™
 (0);
 
-60 
+62 
 	`outb
 (0x1f6, 0xe0 | (1<<4));
 
-61 
+63 
 i
 =0; i<1000; i++){
 
-62 if(
+64 if(
 	`šb
 (0x1f7) != 0){
 
-63 
+65 
 havedisk1
  = 1;
 
-69 
+71 
 	`outb
 (0x1f6, 0xe0 | (0<<4));
 
-70 
+72 
 	}
 }
 
-74 
+79 
 	$ide¡¬t
 (
 buf
@@ -7900,15 +7900,15 @@ buf
 b
 )
 
-76 if(
+81 if(
 b
  == 0)
 
-77 
+82 
 	`·nic
 ("idestart");
 
-78 if(
+83 if(
 b
 ->
 blockno
@@ -7916,11 +7916,11 @@ blockno
 FSSIZE
 )
 
-79 
+84 
 	`·nic
 ("incorrect blockno");
 
-80 
+85 
 £ùÜ_³r_block
  = 
 BSIZE
@@ -7928,7 +7928,7 @@ BSIZE
 SECTOR_SIZE
 ;
 
-81 
+86 
 £ùÜ
  = 
 b
@@ -7938,7 +7938,7 @@ blockno
 £ùÜ_³r_block
 ;
 
-82 
+87 
 »ad_cmd
  = (
 £ùÜ_³r_block
@@ -7948,7 +7948,7 @@ IDE_CMD_READ
 IDE_CMD_RDMUL
 ;
 
-83 
+88 
 wr™e_cmd
  = (
 £ùÜ_³r_block
@@ -7958,45 +7958,45 @@ IDE_CMD_WRITE
 IDE_CMD_WRMUL
 ;
 
-85 ià(
+90 ià(
 £ùÜ_³r_block
  > 7è
 	`·nic
 ("idestart");
 
-87 
+92 
 	`idewa™
 (0);
 
-88 
+93 
 	`outb
 (0x3f6, 0);
 
-89 
+94 
 	`outb
 (0x1f2, 
 £ùÜ_³r_block
 );
 
-90 
+95 
 	`outb
 (0x1f3, 
 £ùÜ
  & 0xff);
 
-91 
+96 
 	`outb
 (0x1f4, (
 £ùÜ
  >> 8) & 0xff);
 
-92 
+97 
 	`outb
 (0x1f5, (
 £ùÜ
  >> 16) & 0xff);
 
-93 
+98 
 	`outb
 (0x1f6, 0xe0 | ((
 b
@@ -8006,7 +8006,7 @@ dev
 £ùÜ
 >>24)&0x0f));
 
-94 if(
+99 if(
 b
 ->
 æags
@@ -8014,13 +8014,13 @@ b
 B_DIRTY
 ){
 
-95 
+100 
 	`outb
 (0x1f7, 
 wr™e_cmd
 );
 
-96 
+101 
 	`out¦
 (0x1f0, 
 b
@@ -8030,45 +8030,45 @@ d©a
 BSIZE
 /4);
 
-98 
+103 
 	`outb
 (0x1f7, 
 »ad_cmd
 );
 
-100 
+105 
 	}
 }
 
-104 
+120 
 	$idešŒ
 ()
 
-106 
+122 
 buf
  *
 b
 ;
 
-109 
+125 
 	`acquœe
 (&
 id–ock
 );
 
-111 if((
+127 if((
 b
  = 
 idequeue
 ) == 0){
 
-112 
+128 
 	`»Ëa£
 (&
 id–ock
 );
 
-115 
+131 
 idequeue
  = 
 b
@@ -8076,7 +8076,7 @@ b
 qÃxt
 ;
 
-118 if(!(
+134 if(!(
 b
 ->
 æags
@@ -8086,7 +8086,7 @@ B_DIRTY
 	`idewa™
 (1) >= 0)
 
-119 
+135 
 	`š¦
 (0x1f0, 
 b
@@ -8096,7 +8096,7 @@ d©a
 BSIZE
 /4);
 
-122 
+138 
 b
 ->
 æags
@@ -8104,7 +8104,7 @@ b
 B_VALID
 ;
 
-123 
+139 
 b
 ->
 æags
@@ -8112,33 +8112,33 @@ b
 B_DIRTY
 ;
 
-124 
+140 
 	`wakeup
 (
 b
 );
 
-127 if(
+143 if(
 idequeue
  != 0)
 
-128 
+144 
 	`ide¡¬t
 (
 idequeue
 );
 
-130 
+146 
 	`»Ëa£
 (&
 id–ock
 );
 
-131 
+147 
 	}
 }
 
-138 
+192 
 	$id”w
 (
 buf
@@ -8146,13 +8146,13 @@ buf
 b
 )
 
-140 
+194 
 buf
  **
 µ
 ;
 
-142 if(!
+196 if(!
 	`hÞdšg¦“p
 (&
 b
@@ -8160,11 +8160,11 @@ b
 lock
 ))
 
-143 
+197 
 	`·nic
 ("iderw: buf‚ot†ocked");
 
-144 if((
+198 if((
 b
 ->
 æags
@@ -8174,11 +8174,11 @@ B_VALID
 B_DIRTY
 )) == B_VALID)
 
-145 
+199 
 	`·nic
 ("iderw:‚othingo do");
 
-146 if(
+200 if(
 b
 ->
 dev
@@ -8186,23 +8186,23 @@ dev
 havedisk1
 )
 
-147 
+201 
 	`·nic
 ("iderw: ide disk 1‚ot…resent");
 
-149 
+203 
 	`acquœe
 (&
 id–ock
 );
 
-152 
+206 
 b
 ->
 qÃxt
  = 0;
 
-153 
+207 
 µ
 =&
 idequeue
@@ -8210,25 +8210,25 @@ idequeue
 qÃxt
 )
 
-155 *
+209 *
 µ
  = 
 b
 ;
 
-158 if(
+212 if(
 idequeue
  =ð
 b
 )
 
-159 
+213 
 	`ide¡¬t
 (
 b
 );
 
-162 (
+216 (
 b
 ->
 æags
@@ -8238,7 +8238,7 @@ B_VALID
 B_DIRTY
 )) != B_VALID){
 
-163 
+217 
 	`¦“p
 (
 b
@@ -8246,13 +8246,13 @@ b
 id–ock
 );
 
-167 
+220 
 	`»Ëa£
 (&
 id–ock
 );
 
-168 
+221 
 	}
 }
 
