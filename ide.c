@@ -47,6 +47,8 @@ idewait(int checkerr)
   return 0;
 }
 
+// initialises idelock to 0, and executes assembly instructions to
+// check disk availability
 void
 ideinit(void)
 {
@@ -70,6 +72,9 @@ ideinit(void)
 }
 
 // Start the request for b.  Caller must hold idelock.
+/* this does some calculations for the correct sector and then performs
+ * the required read / write operation
+ */
 static void
 idestart(struct buf *b)
 {
@@ -100,6 +105,17 @@ idestart(struct buf *b)
 }
 
 // Interrupt handler.
+/* disk interrupt comes here, from trap.c
+ *
+ * lock on the idequeue is acquired so that the queue can be manipulated
+ * after that, the request that is at the head must be deqeueued so that
+ * the process can wake up and continue its work
+ *
+ * the process which was sleeping on the buffer is woken up after reading
+ * in the data to the buffer and setting the flag to B_VALID
+ *
+ * then, the next request in the idequeue is handled by calling idestart()
+ */
 void
 ideintr(void)
 {
@@ -134,6 +150,44 @@ ideintr(void)
 // Sync buf with disk.
 // If B_DIRTY is set, write buf to disk, clear B_DIRTY, set B_VALID.
 // Else if B_VALID is not set, read buf from disk, set B_VALID.
+
+/* FS layers call this function for doing read/write operations on the disk
+ * An idequeue is maintained to manage the disk operations
+ * this queue is nothing other than a singly linked list of struct bufs (buffer
+ * cache buffers)
+ * since only one operation can be performed at a time, 
+ * the head of the queue determines the operation to be currently performed
+ *
+ * idelock is the spinlock used to protect the idequeue's head
+ *
+ * it is mandatory for the process that has called iderw() to have the
+ * sleeplock for the struct buf
+ * holdingsleep() is called to check this
+ *
+ * As an example, consider processes P1 and P2 that want to perform some
+ * disk operations with buffers B1 and B2 respectively
+ * P1 and P2 both hold sleeplocks for these buffers
+ * the idequeue is empty (idequeue -> NULL)
+ *
+ * If both call iderw(), then only one will be able to append an entry 
+ * in the idequeue, say P1 acquires idelock and appends B1 to the idequeue
+ *
+ * now, since idequeue points to B1 (B1 is at the head)
+ * P1 now calls sleep(), releasing the idequeue spinlock
+ * it wants to wait until the I/O is complete
+ *
+ * now, P2 which was spinning to acquire idelock, acquires it and appends
+ * B2 to the queue
+ *
+ * similary, it calls sleep(), releasing the idelock so that some
+ * other process can add its buffer to the queue
+ *
+ * queue contains B1, B2 and P1 and P2 are sleeping on those buffers
+ *
+ * Now, when a disk interrupt occurs for B1, the kernel will handle it by
+ * calling ideintr(), which will wake up P1, dequeue B1 from the queue and
+ * idestart() B2, which means that the disk I/O for P2 (B2) will start
+ */
 void
 iderw(struct buf *b)
 {
@@ -162,7 +216,6 @@ iderw(struct buf *b)
   while((b->flags & (B_VALID|B_DIRTY)) != B_VALID){
     sleep(b, &idelock);
   }
-
 
   release(&idelock);
 }
