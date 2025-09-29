@@ -1090,6 +1090,15 @@ namex(char *path, int nameiparent, char *name)
   return ip;
 }
 
+/* namei() and nameiparent() are basically similar functions that 
+ * parse the path name and return a pointer to the inode of that
+ * file or the inode to the parent directory of that file, if it exists 
+ * and if the path name is correct
+ *
+ * namex() is called form both, which takes a flag that decides which
+ * inode to return. namei() and nameiparent() are just wrappers over 
+ * namex()
+ */
 struct inode*
 namei(char *path)
 {

@@ -214,6 +214,11 @@ sys_fstat(void)
 }
 
 // Create the path new as a link to the same inode as old.
+/* link(src_name, tgt_name) links a file to a new name in the file
+ * system directory structure
+ * basically, it creates an additional directory  entry for an
+ * existing inode :)
+ */
 int
 sys_link(void)
 {
@@ -224,25 +229,46 @@ sys_link(void)
     return -1;
 
   begin_op();
+  // obtain old file's (src_name's) inode using namei()
   if((ip = namei(old)) == 0){
     end_op();
     return -1;
   }
 
+  // lock old inode
   ilock(ip);
+
+  // if it is a directory, then return since that is not allowed in xv6
   if(ip->type == T_DIR){
     iunlockput(ip);
     end_op();
     return -1;
   }
 
+  // increment link count by 1
   ip->nlink++;
+
+  // write it back to disk and unlock the inode
+  /* this unlock is necessary to avoid a deadlock scenario :)
+   * process A: link("a/b/c/d", "e/f/g");
+   * process B: link("e/f", "a/b/c/d/ee");
+   *
+   * OR a single process can deadlock ITSELF :)
+   * link("a/b/c", "a/b/c/d")
+   */
   iupdate(ip);
   iunlock(ip);
 
+  // we now need to add an entry in the parent directory of target
+  // pathname (new)
+  // first obtain inode dp to parent directory
   if((dp = nameiparent(new, name)) == 0)
     goto bad;
   ilock(dp);
+
+  // if dp->dev and ip->dev are different (on two devices) then this
+  // link should not be allowed
+  // call dirlink() to create the new directory entry
   if(dp->dev != ip->dev || dirlink(dp, name, ip->inum) < 0){
     iunlockput(dp);
     goto bad;
@@ -254,6 +280,7 @@ sys_link(void)
 
   return 0;
 
+  // undo the changes that we did earlier
 bad:
   ilock(ip);
   ip->nlink--;
@@ -280,6 +307,7 @@ isdirempty(struct inode *dp)
 }
 
 //PAGEBREAK!
+// unlink(pathname) is used to remove a directory entry for a file
 int
 sys_unlink(void)
 {
@@ -292,6 +320,7 @@ sys_unlink(void)
     return -1;
 
   begin_op();
+  // obtain the parent directory's inode dp
   if((dp = nameiparent(path, name)) == 0){
     end_op();
     return -1;
@@ -303,26 +332,39 @@ sys_unlink(void)
   if(namecmp(name, ".") == 0 || namecmp(name, "..") == 0)
     goto bad;
 
+  // lookup the name in directory dp to obtain inode of the file being unlinked
   if((ip = dirlookup(dp, name, &off)) == 0)
     goto bad;
   ilock(ip);
 
+  // number of links to this entry must be atleast 1
   if(ip->nlink < 1)
     panic("unlink: nlink < 1");
+
+  // if the type of the inode is a directory, then a directory cannot be unlinked
+  // if it is not empty (this is where rmdir fails for non-empty directory)
   if(ip->type == T_DIR && !isdirempty(ip)){
     iunlockput(ip);
     goto bad;
   }
 
+  // set the directory entry to 0 and write the inode to disk
   memset(&de, 0, sizeof(de));
   if(writei(dp, (char*)&de, off, sizeof(de)) != sizeof(de))
     panic("unlink: writei");
+
+  // if the file to be unlinked is a directory, then reduce the link count
+  // and update the parent directory inode, since the ".." in the dir to be
+  // removed will no longer "point" to the parent directory
   if(ip->type == T_DIR){
     dp->nlink--;
     iupdate(dp);
   }
   iunlockput(dp);
 
+  // finally, decrement the reference count to the inode being unlinked,
+  // and if the count AND link count reaches zero, we need to free the 
+  // inode, thus freeing all the data blocks of that file
   ip->nlink--;
   iupdate(ip);
   iunlockput(ip);
@@ -331,6 +373,7 @@ sys_unlink(void)
 
   return 0;
 
+  // unlock dp and return -1
 bad:
   iunlockput(dp);
   end_op();
@@ -349,28 +392,52 @@ create(char *path, short type, short major, short minor)
   struct inode *ip, *dp;
   char name[DIRSIZ];
 
+  // get a pointer to the parent directory, ensure that it exists
   if((dp = nameiparent(path, name)) == 0)
     return 0;
+
+  // lock the parent directory
   ilock(dp);
 
+  // find the file name in the directory dp, and get its
+  // inode if that file exists
   if((ip = dirlookup(dp, name, 0)) != 0){
+	// if the file already exists, then unlock the parent directory
     iunlockput(dp);
     ilock(ip);
+	/* check if the types given vs that of actual file are both
+	 * T_FILE
+	 * in that case, return ip
+	 * else, unlock the inode and return 0, since it is not possible
+	 * to create that file here, since there is a file existing with a
+	 * different file type
+	 */
     if(type == T_FILE && ip->type == T_FILE)
       return ip;
     iunlockput(ip);
     return 0;
   }
 
+  // we reached here means that anew file needs to be created
+  // allocate an inode for that file
   if((ip = ialloc(dp->dev, type)) == 0)
     panic("create: ialloc");
 
+  // set the major and minor device numbers
   ilock(ip);
   ip->major = major;
   ip->minor = minor;
   ip->nlink = 1;
+  // write that inode to disk
   iupdate(ip);
 
+  /* if a directory is created using create(), then d
+   * increment dp->nlink, since the new directory will contain a
+   * ".." entry that refers to the parent directory!
+   * update the parent directory inode (write to disk)
+   *
+   * now, dirlink() ".", ".." to the newly allocated inode
+   */
   if(type == T_DIR){  // Create . and .. entries.
     dp->nlink++;  // for ".."
     iupdate(dp);
@@ -379,9 +446,11 @@ create(char *path, short type, short major, short minor)
       panic("create dots");
   }
 
+  // finally create an entry in the parent directory
   if(dirlink(dp, name, ip->inum) < 0)
     panic("create: dirlink");
 
+  // unlock the parent directory inode
   iunlockput(dp);
 
   return ip;
@@ -451,6 +520,12 @@ sys_open(void)
   return fd;
 }
 
+/* just calls create() and tells it to create a directory entry in the
+ * path, and return the inode of that entry
+ *
+ * begin_op() and end_op() are required since create() calls iupdate()
+ * which internally calls log_write() to write an inode to disk
+ */
 int
 sys_mkdir(void)
 {
@@ -467,6 +542,8 @@ sys_mkdir(void)
   return 0;
 }
 
+/* just calls create(), similar to sys_mkdir()
+ */
 int
 sys_mknod(void)
 {
@@ -495,19 +572,25 @@ sys_chdir(void)
   struct proc *curproc = myproc();
   
   begin_op();
+  // use namei() to parse the name and obtain the inode to the
   if(argstr(0, &path) < 0 || (ip = namei(path)) == 0){
     end_op();
     return -1;
   }
   ilock(ip);
+
+  // ensure that the target is a directory
   if(ip->type != T_DIR){
     iunlockput(ip);
     end_op();
     return -1;
   }
   iunlock(ip);
+
+  // iput() the current cwd, which basically writes it to disk
   iput(curproc->cwd);
   end_op();
+  // set curproc->cwd to point to path's inode
   curproc->cwd = ip;
   return 0;
 }
