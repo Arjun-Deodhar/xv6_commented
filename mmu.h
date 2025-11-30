@@ -225,7 +225,7 @@ struct segdesc {
  * 	number of entries in a page table
  *
  * PGSIZE
- * 	size of a page, default valus is 4KB
+ * 	size of a page, default value is 4KB
  *
  * PTXSHIFT
  * 	number of times we need to right shift the virtual
@@ -255,11 +255,11 @@ struct segdesc {
  * 	that is an intergral multiple of PGSIZE
  *
  * for example, PGSIZE = 32
- * 	sz		PGROUNDUP(sz)	PGROUNDDOWN(sz)
- * 	33		64		32
- * 	150		160		128
- * 	145		160		128
- * 	200		224		192
+ * 	sz		PGROUNDUP(sz)	   PGROUNDDOWN(sz)
+ * 	33		64		           32
+ * 	150		160		           128
+ * 	145		160		           128
+ * 	200		224		           192
  */
 #define PGROUNDUP(sz)  (((sz)+PGSIZE-1) & ~(PGSIZE-1))
 #define PGROUNDDOWN(a) (((a)) & ~(PGSIZE-1))

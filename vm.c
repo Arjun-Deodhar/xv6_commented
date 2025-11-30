@@ -103,7 +103,7 @@ seginit(void)
  * that corresponds to virtual address va
  *
  * if no such PTE is found, and alloc != 0
- * then a page is created
+ * then a page is created for the page table
  */
 static pte_t *
 walkpgdir(pde_t *pgdir, const void *va, int alloc)
@@ -126,11 +126,6 @@ walkpgdir(pde_t *pgdir, const void *va, int alloc)
    * if *pde is valid
    *	we need to proceed to get the address of 
    *	the page table which is inside *pde
-   *
-   *	DOUBTFUL {
-   *	PTE_ADDR(*pde) wil return the physical page number, 
-   *	PPN from the page table entry *pde
-   *	}
    *
    *	P2V will add KERNBASE for converting physical address
    *	into a virtual address, and once it is casted to 
@@ -199,17 +194,17 @@ mappages(pde_t *pgdir, void *va, uint size, uint pa, int perm)
    *	The loop below must run twice for this to happen
    *
    *	If we do not subtract 1 from va + size before grounding
-   *	the address down to a page boundary, then this is happens:
+   *	the address down to a page boundary, then this happens:
    *	
    *	initially,
    * 	a	= PGROUNDDOWN((uint) va) = PGROUNDDOWN(4096) = 4096
    * 	last	= PGROUNDDOWN(((uint) va) + size) = PGROUNDDOWN(4096  + 8192)
    * 		= 12288
    *
-   *	iter	a	last	a == last
-   *	0	4096	12288	0
-   *	1	8192	12288	0
-   *	2	12288	12288	1
+   *	iter	a	      last	  a == last
+   *	0	    4096	  12288	  0
+   *	1	    8192	  12288	  0
+   *	2	    12288	  12288	  1
    *
    *	This is not desired, since 3 iterations are performed
    *
@@ -300,12 +295,12 @@ mappages(pde_t *pgdir, void *va, uint size, uint pa, int perm)
  * contains 4 entries, to map the virtual addresses to the corresponding
  * physical memory regions
  *
- * Name(Value)			From		To			Perms	
- * KERNBASE(2 GB)		0		1MB			writeable
+ * Name(Value)	            		From		      To		     	Perms	
+ * KERNBASE(2 GB)	            	0		         1MB		    	writeable
  * 
- * KERNLINK(KERNBASE + 1MB)	1MB		1MB + 32K		readonly
+ * KERNLINK(KERNBASE + 1MB)   	1MB	  	     1MB + 32K		readonly
  *
- * data(set as 0x80108000)	1MB + 32K	224MB			writeable
+ * data(set as 0x80108000)	    1MB + 32K	   224MB		    writeable
  *
  * DEVSPACE(other devices)	4064MB		0			writeable
  *
@@ -451,10 +446,10 @@ switchuvm(struct proc *p)
    * to those of the current process, to which control is
    * to be transfered
    *
-   * type	STS_T32A, for 32 bit TSS
-   * base	base is the base address of mycpu()->ts
+   * type	  STS_T32A, for 32 bit TSS
+   * base	  base is the base address of mycpu()->ts
    * limit	limit is the sizeof(mycpu()->ts) - 1
-   * dpl	why is dpl 0?
+   * dpl	  why is dpl 0?
    *
    * then, the s field is set to 0, meaning that it
    * will be used by the system
@@ -564,10 +559,31 @@ deallocuvm(pde_t *pgdir, uint oldsz, uint newsz)
   pte_t *pte;
   uint a, pa;
 
+  // return oldsz if newsz is greater than or equal to it
   if(newsz >= oldsz)
     return oldsz;
 
   a = PGROUNDUP(newsz);
+
+  /* in a loop, do the following:
+   *    get the address of page table for virtual address a
+   *    0 sent so that page table will not be allocated
+   * 
+   *    if the page table does not exist, 
+   *       then set a to 
+   *       PGADDR(PDX(a) + 1, 0, 0) - PGSIZE
+   *       
+   *       PGADDR(d, t, o) is a macro that creates a virtual address from 
+   *       d: page directory index (index into the page directory)
+   *       t: page table index (index into the page table)
+   *       o: offset (offset into the page)
+   *
+   *       PDX(a) + 1 means that we go to the next page table in the directory
+   *       i.e. if currently a's virtual address tells to check 9th page table
+   *       then we will proceed to the 10th page table becuase 9th one does not
+   *       exist
+   *
+   */
   for(; a  < oldsz; a += PGSIZE){
     pte = walkpgdir(pgdir, (char*)a, 0);
     if(!pte)

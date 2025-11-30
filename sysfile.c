@@ -46,7 +46,7 @@ argfd(int n, int *pfd, struct file **pf)
    * then, error handling is done to ensure that
    * 	fd >= 0
    * 	fd < NOFILE (less than the number of open files)
-   * 	teh value of ofile[fd] is not NULL
+   * 	the value of ofile[fd] is not NULL
    *
    * then, the value of pfd is copied into *pfd
    * and the ofile[fd] struct file pointer is copied into *pf
@@ -502,6 +502,15 @@ sys_open(void)
     }
   }
 
+  /* filealloc() reserves an entry in the global file table for pointing to 
+   * this file, and fdalloc() sets a file descriptor for the process to 
+   * access this file via the open file array in struct proc
+   *
+   * effectively, if both calls succeed:
+   * ofile[fd] in struct proc points to a newly created entry in the file table
+   *
+   * inode allocated for the file is unlocked and written to disk
+   */
   if((f = filealloc()) == 0 || (fd = fdalloc(f)) < 0){
     if(f)
       fileclose(f);
@@ -512,6 +521,12 @@ sys_open(void)
   iunlock(ip);
   end_op();
 
+  /* set the entries in file table appropriately
+   * f->ip will point to the inode of that file
+   * f->off will be 0, since the file is just opened
+   * readable and writable flags will be set according to the mode
+   * flags specified by the system call
+   */
   f->type = FD_INODE;
   f->ip = ip;
   f->off = 0;

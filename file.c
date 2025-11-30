@@ -189,6 +189,8 @@ fileread(struct file *f, char *addr, int n)
    * 	panic()
    *
    * Q: What exactly is the FD_PIPE type?
+   * A: An in-memory pipe data structure allocated by the kernel
+   * which is used for supporting "IPC" between processes
    */
   if(f->readable == 0)
     return -1;

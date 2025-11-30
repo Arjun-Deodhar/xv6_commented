@@ -1,13 +1,16 @@
 /* sleeplocks are used for tasks that require a lock to be held for 
  * a long time
  *
- * this improves performance, since slow tasks like disk access would
- * make the process hold the spinlock for a very long time, causing others
- * to spin
+ * if a process tries to aqcuiresleep() a resource protected by a 
+ * sleeplock, and if some other process is using the resource, then
+ * the process trying will be put to sleep
  *
- * sleeplock itlsef needs to be protected by a spinlocks, since that is the rule
- * use the lower level synchronization primitive in order to build higher
- * level mechanisms
+ * it is the responsibility of the process that is holding the sleeplock
+ * to wakeup() any processes that are sleeping for that resource
+ *
+ * sleeplock itself needs to be protected by a spinlock, since that is the rule!
+ * "use the lower level synchronization primitive in order to build higher
+ * level mechanisms"
  *
  * not using the spinlock can cause a race to access the sleeplock!
  */

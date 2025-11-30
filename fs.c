@@ -179,7 +179,11 @@ struct {
  * for each inode in icache (maximum of NINODE inodes can be stored in cache)
  * 	initsleeplock() is called, to lock the inodes
  *
- * then, te superblock is read from the disk into global variable sb
+ * then, the superblock is read from the disk into global variable sb
+ *
+ * this is called from forkret(), NOT in kernel's main(), because this
+ * contains calls to sleep() and thus must be done in the context of a
+ * user process
  */
 void
 iinit(int dev)
@@ -241,6 +245,9 @@ ialloc(uint dev, short type)
    *
    * Q: should't there be an inner loop for checking for each of the
    * 8 inodes in a block? Won't this result in 7 less reads for every 8 inodes?
+   * A: It might seem like that by looking at the code, but since bread() calls 
+   * bget(), the block read for inum = i will typically be found in the buffer 
+   * cache the next time bread() is called for inum = i + 1
    */
   for(inum = 1; inum < sb.ninodes; inum++){
     bp = bread(dev, IBLOCK(inum, sb));
@@ -425,8 +432,11 @@ ilock(struct inode *ip)
    *
    * hence, bread() the block into memory, and make dip point to the correct
    * inode entry by arithmetic
+   * bread() will call bget() that lock the buffer
+   * this buffer is released by calling brelse()
    *
    * copy the type, major, minor, nlink, size entries from dip into ip
+   * where ip is the in-memory copy of the inode
    * memmove() to copy the addrs array from dip into ip
    *
    * release the lock on bp, and set the valid bit of ip to 1
@@ -760,6 +770,8 @@ readi(struct inode *ip, char *dst, uint off, uint n)
 /* similar to the readi() function, but performs a write
  *
  * some error handling is different
+ *
+ * uses the log to write, so that we can recover on a crash
  */
 int
 writei(struct inode *ip, char *src, uint off, uint n)

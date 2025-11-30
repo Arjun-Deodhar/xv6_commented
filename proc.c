@@ -773,6 +773,13 @@ yield(void)
 // will swtch here.  "Return" to user space.
 /* forkret() exists so that the ptable.lock can be released for
  * the first time a process is scheduled
+ *
+ * if(first) is only entered once, by init, since the first flag is cleared
+ * after entering the if statement
+ * iinit() basically sets up the inode cache and reads in the superblock
+ * from disk. This involves sleep(), and since the kernel cannot sleep() in
+ * the main() of the kernel (there is no "process" there!), this iinit() and
+ * initlog() needs to be called here :)
  */
 void
 forkret(void)
