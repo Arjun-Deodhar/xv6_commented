@@ -111,7 +111,8 @@ fileclose(struct file *f)
 
   /* reference count reached zero
    *
-   * set the f->ref to 0 (Does this really need to be done?)
+   * set the f->ref to 0 (Does this really need to be done, since the --f->ref
+   * above will take care of the same?)
    * set the type of the struct file entry to FD_NONE
    * release() the lock on the file table
    */

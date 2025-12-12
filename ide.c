@@ -40,6 +40,7 @@ idewait(int checkerr)
 {
   int r;
 
+  // poll the device, by checking the status on address 0x1f7
   while(((r = inb(0x1f7)) & (IDE_BSY|IDE_DRDY)) != IDE_DRDY)
     ;
   if(checkerr && (r & (IDE_DF|IDE_ERR)) != 0)
@@ -92,9 +93,13 @@ idestart(struct buf *b)
   idewait(0);
   outb(0x3f6, 0);  // generate interrupt
   outb(0x1f2, sector_per_block);  // number of sectors
+
+  // 0x1f3, 0x1f4, 0x1f5 contain the low, mid, and high bytes
+  // of the logical block address (LBA) to be issued to the disk
   outb(0x1f3, sector & 0xff);
   outb(0x1f4, (sector >> 8) & 0xff);
   outb(0x1f5, (sector >> 16) & 0xff);
+
   outb(0x1f6, 0xe0 | ((b->dev&1)<<4) | ((sector>>24)&0x0f));
   if(b->flags & B_DIRTY){
     outb(0x1f7, write_cmd);

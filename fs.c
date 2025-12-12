@@ -229,15 +229,18 @@ ialloc(uint dev, short type)
    * 	then, a struct dinode *dip points to the proper offset into bp->data,
    * 	since one block contains BSIZE / sizeof(struct dinode) entries
    *
-   *
    * 	if dip->type == 0
    * 		free inode obtained
    * 		the inode obtained is zeroed
    *		type is set to type
    *		block is written onto disk by log_write()
-   *		lock on the block obtained in bread() is released
+   *		the block is released
+   *
    *		iget() is called to allocate an in-memory entry in 
    *		the inode cache
+   *
+   *		iget() does NOT lock the inode, hence ilock() must be called
+   *		after ialloc()
    *
    *	else
    *		dip->type is non-zero, indicating that the inode is in use
@@ -528,8 +531,6 @@ iput(struct inode *ip)
 }
 
 // Common idiom: unlock, then put.
-/* ensures that the inode is unlocked and then put
- */
 void
 iunlockput(struct inode *ip)
 {
